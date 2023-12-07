@@ -6,6 +6,11 @@ export const findUserByUsername = (username) =>
   model.findOne({ username: username });
 export const findUserByCredentials = (usr, pass) =>
   model.findOne({ username: usr, password: pass });
+
 export const updateUser = (userId, user) =>
   model.updateOne({ _id: userId }, { $set: user });
+
+export const updateFavs = (userId, favourites) =>
+  model.updateOne({ _id: userId }, { $set: { favourites: favourites } });
+  
 export const deleteUser = (userId) => model.deleteOne({ _id: userId });

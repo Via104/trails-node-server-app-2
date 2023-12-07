@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
       default: "REGULAR",
     },
     favourites: {
-      type: [String],
+      type: [Object],
       required: false,
     },
   },
