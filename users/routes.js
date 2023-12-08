@@ -19,7 +19,7 @@ function UserRoutes(app) {
   const signup = async (req, res) => {
     const user = await dao.findUserByUsername(req.body.username);
     if (user) {
-      res.status(400).json({ message: "Username already taken" });
+      res.status(400).send("Username already taken");
       alert("Username already taken");
     }
     const currentUser = await dao.createUser(req.body);
@@ -34,7 +34,7 @@ function UserRoutes(app) {
       req.session["currentUser"] = currentUser;
       res.json(currentUser);
     } else {
-      res.status(400).json({ message: "Wrong username or password" });
+      res.status(400).send("Wrong username or password");
     }
   };
 
