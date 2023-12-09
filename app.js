@@ -2,7 +2,6 @@ import express from "express";
 import session from "express-session";
 import cors from "cors";
 import mongoose from "mongoose";
-
 import UserRoutes from "./users/routes.js";
 // import TrailRoutes from "./trails/routes.js";
 
@@ -23,16 +22,20 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
 };
-if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-  };
-}
+// sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//   };
+// if (process.env.NODE_ENV !== "development") {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//   };
+// }
 
 app.use(session(sessionOptions));
-
 app.use(express.json());
 
 UserRoutes(app);
