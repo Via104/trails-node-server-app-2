@@ -29,7 +29,9 @@ function UserRoutes(app) {
 
   const signin = async (req, res) => {
     const { username, password } = req.body;
+    // console.log(`username: ${username}, pass: ${password}`)
     const currentUser = await dao.findUserByCredentials(username, password);
+    // console.log(`Current user: ${currentUser}`)
     if (currentUser) {
       req.session["currentUser"] = currentUser;
       res.json(currentUser);
@@ -39,26 +41,36 @@ function UserRoutes(app) {
   };
 
   const signout = (req, res) => {
+    console.log('destroying')
     req.session.destroy();
     res.sendStatus(200);
   };
 
   const account = async (req, res) => {
-    const currentUser = req.session["currentUser"];
-    res.json(currentUser);
+    // console.log(req.session)
+    if (!req.session['currentUser']) {
+      res.status(404).json({ message: "You are not signed in." })
+      return;
+    }
+    res.json(req.session['currentUser']);
   };
 
-  const favourites = async (req, res) => {
+  const favorites = async (req, res) => {
     const user = await dao.findUserById(req.params.userId);
-    res.json(user.favourites);
+    res.json(user.favorites);
   };
 
-  const addToFavourites = async (req, res) => {
+  const addToFavorites = async (req, res) => {
     const { userId } = req.params;
-    const currentUser = await dao.findUserById(userId);
-    req.session["currentUser"] = currentUser;
-    const favs = [...currentUser.favourites, req.body];
+    const { user, trail } = req.body;
+    console.log(`userId: ${userId}`)
+    console.log(`old user: ${user}`)
+    const favs = [...user.favorites, trail];
     const status = await dao.updateFavs(userId, favs);
+    const currentUser = await dao.findUserById(userId);
+    console.log(`new user: ${currentUser}`)
+    console.log(`favorite count:  ${currentUser.favorites.length}`)
+    req.session["currentUser"] = currentUser;
     res.json(status);
   };
 
@@ -77,8 +89,8 @@ function UserRoutes(app) {
   app.post("/api/users/account", account);
 
   // trails
-  app.get("/api/users/:userId/favourites", favourites);
-  app.put("/api/users/:userId/favourites/:trailId", addToFavourites);
+  app.get("/api/users/:userId/favorites", favorites);
+  app.put("/api/users/favorites/:userId", addToFavorites);
   app.put("/api/trails/:trailId", updateTrail);
 }
 export default UserRoutes;
