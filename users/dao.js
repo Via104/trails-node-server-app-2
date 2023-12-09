@@ -10,7 +10,7 @@ export const findUserByCredentials = (usr, pass) =>
 export const updateUser = (userId, user) =>
   model.updateOne({ _id: userId }, { $set: user });
 
-export const updateFavs = (userId, favourites) =>
-  model.updateOne({ _id: userId }, { $set: { favourites: favourites } });
+export const updateFavs = (userId, favorites) =>
+  model.updateOne({ _id: userId }, { $set: { favorites: favorites } });
   
 export const deleteUser = (userId) => model.deleteOne({ _id: userId });
