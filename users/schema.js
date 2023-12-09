@@ -5,12 +5,13 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     firstName: String,
     lastName: String,
+    email: String,
     role: {
       type: String,
       enum: ["REGULAR", "ADMIN"],
       default: "REGULAR",
     },
-    favourites: {
+    favorites: {
       type: [Object],
       required: false,
     },
