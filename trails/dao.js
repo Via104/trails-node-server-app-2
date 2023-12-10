@@ -1,26 +1,24 @@
-// import model from "./model.js";
-// import axios from "axios";
+import model from "./model.js";
 
-// export const fetchTrails = async () => {
-//   const options = {
-//     method: "GET",
-//     url: "https://trailapi-trailapi.p.rapidapi.com/trails/explore/",
-//     params: {
-//       lat: "38.79908",
-//       lon: "-104.88353",
-//     },
-//     headers: {
-//       "X-RapidAPI-Key": "d102ce3527mshc4b1f040aa83cb1p137adbjsn3f7e380a5e93",
-//       "X-RapidAPI-Host": "trailapi-trailapi.p.rapidapi.com",
-//     },
-//   };
-//   try {
-//     const response = await axios.request(options);
-//     console.log("response data: " + response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+export const findTrailById = (trailId) => model.findOne({ trailId: trailId });
 
-// export const findAllTrails = () => model.find(fetchTrails());
+// create a trail in db
+export const createTrail = (trailId, name, url, length, description, userId) =>
+  model.create({
+    trailId: trailId,
+    name: name,
+    url: url,
+    length: length,
+    description: description,
+    users: [userId],
+  });
+
+// fetch all favourited trails in db
+export const findAllFavTrails = () => model.find();
+
+// add/remove users who favored this trail
+export const updateUsers = (trailId, users) =>
+  model.updateOne({ trailId: trailId }, { $addToSet: { users: users } });
+
+export const updateTrail = (trail) =>
+  model.updateOne({ trailId: trail.id }, { $set: trail });

@@ -8,6 +8,7 @@ function UserRoutes(app) {
 
   const findUserById = async (req, res) => {
     const user = await dao.findUserById(req.params.userId);
+    req.session["currentUser"] = user;
     res.json(user);
   };
 
@@ -55,16 +56,28 @@ function UserRoutes(app) {
 
   const addToFavourites = async (req, res) => {
     const { userId } = req.params;
+    const trail = req.body;
     const currentUser = await dao.findUserById(userId);
     req.session["currentUser"] = currentUser;
-    const favs = [...currentUser.favourites, req.body];
-    const status = await dao.updateFavs(userId, favs);
-    res.json(status);
+    // if trail already favourited
+    const inList = currentUser.favourites.some((t) => t.id === trail.id);
+    if (!inList) {
+      const favs = [...currentUser.favourites, trail];
+      const status = await dao.updateFavs(userId, favs);
+      res.json(status);
+    } else {
+      res.sendStatus(200);
+    }
   };
 
   const updateTrail = async (req, res) => {
-    const { trailId } = req.params;
-    
+    const { userId } = req.params;
+    const currentUser = await dao.findUserById(userId);
+    req.session["currentUser"] = currentUser;
+    const newTrail = req.body;
+    console.log(newTrail);
+    const status = await dao.replaceTrail(userId, newTrail);
+    res.json(status);
   };
 
   // users
@@ -79,6 +92,6 @@ function UserRoutes(app) {
   // trails
   app.get("/api/users/:userId/favourites", favourites);
   app.put("/api/users/:userId/favourites/:trailId", addToFavourites);
-  app.put("/api/trails/:trailId", updateTrail);
+  app.put("/api/users/:userId/:trailId", updateTrail);
 }
 export default UserRoutes;
