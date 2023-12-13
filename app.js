@@ -3,6 +3,7 @@ import session from "express-session";
 import cors from "cors";
 import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
+import LikesRoutes from "./likes/routes.js";
 // import TrailRoutes from "./trails/routes.js";
 
 const CONNECTION_STRING =
@@ -39,6 +40,7 @@ app.use(session(sessionOptions));
 app.use(express.json());
 
 UserRoutes(app);
+LikesRoutes(app);
 // TrailRoutes(app);
 
 // app.use(cors());
