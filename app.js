@@ -21,26 +21,21 @@ app.use(
 const sessionOptions = {
   secret: "any string",
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 },
 };
-// sessionOptions.proxy = true;
-//   sessionOptions.cookie = {
-//     sameSite: "none",
-//     secure: true,
-//   };
-// if (process.env.NODE_ENV !== "development") {
-//   sessionOptions.proxy = true;
-//   sessionOptions.cookie = {
-//     sameSite: "none",
-//     secure: true,
-//   };
-// }
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+  };
+}
 
 app.use(session(sessionOptions));
 app.use(express.json());
 
 UserRoutes(app);
-LikesRoutes(app);
 // TrailRoutes(app);
 
 // app.use(cors());

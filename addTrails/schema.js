@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const trailSchema = new mongoose.Schema(
+const addTrailSchema = new mongoose.Schema(
   {
     trailId: { type: String, required: true, unique: true },
     name: String,
@@ -8,7 +8,7 @@ const trailSchema = new mongoose.Schema(
     length: Number,
     description: String,
   },
-  { collection: "trails" }
+  { collection: "addTrails" }
 );
 
-export default trailSchema;
+export default addTrailSchema;
