@@ -42,12 +42,10 @@ function LikesRoutes(app) {
     res.json(trails);
   };
 
-  app.post("/api/users/:userId/likes/:trailId", createUserLikesTrail);
-  app.post("/api/users/likes/:trailId", createUserLikesTrail);
-  app.delete("/api/users/:userId/likes/:trailId", deleteUserLikesTrail);
-  app.delete("/api/users/likes/:trailId", deleteUserLikesTrail);
-  app.get("/api/trails/:trailId/likes", findUsersLikedTrail);
-  app.get("/api/users/:userId/likes", findTrailsLikedByUser);
+  app.post("/api/likes/user/trail/:trailId", createUserLikesTrail);
+  app.delete("/api/likes/trail/:trailId", deleteUserLikesTrail);
+  app.get("/api/likes/trails/:trailId", findUsersLikedTrail);
+  app.get("/api/likes/user/:userId", findTrailsLikedByUser);
   app.get("/api/likes", findLikes);
 }
 
