@@ -10,4 +10,4 @@ export const findUsersLikedTrail = (trailId) =>
   model.find({ trailId }).populate("user").exec();
 
 export const findTrailsLikedByUser = (userId) => model.find({ user: userId });
-export const findLikedTrails = () => model.find().populate("user").exec();
+export const findLikes = () => model.find().populate("user").exec();
