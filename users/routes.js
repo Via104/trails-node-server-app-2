@@ -8,7 +8,6 @@ function UserRoutes(app) {
 
   const findUserById = async (req, res) => {
     const user = await dao.findUserById(req.params.userId);
-    req.session["currentUser"] = user;
     res.json(user);
   };
 
@@ -62,7 +61,7 @@ function UserRoutes(app) {
 
   const account = async (req, res) => {
     if (req.session['currentUser']) {
-      console.log("Server user: " + req.session['currentUser']);
+      console.log("Server user: " + req.session['currentUser'].username);
       res.json(req.session['currentUser'])
     } else {
       res.json({})
