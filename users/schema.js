@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
       enum: ["REGULAR", "ADMIN"],
       default: "REGULAR",
     },
-    favorites: {
+    favourites: {
       type: [Object],
       unique: true,
       required: false,
