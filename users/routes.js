@@ -36,7 +36,7 @@ function UserRoutes(app) {
     if (currentUser) {
       req.session["currentUser"] = currentUser;
       // console.log("current user saved in req.session")
-      // console.log("req session user: " + req.session["currentUser"]);
+      console.log("req session user: " + req.session["currentUser"]);
       res.json(currentUser);
     } else {
       res.status(400).json({ message: "Wrong username or password" });
@@ -62,8 +62,8 @@ function UserRoutes(app) {
 
   const account = async (req, res) => {
     if (req.session['currentUser']) {
-      //console.log("Server user: " + req.session['currentUser']);
-      res.send(req.session['currentUser'])
+      console.log("Server user: " + req.session['currentUser']);
+      res.json(req.session['currentUser'])
     } else {
       res.json({})
     }

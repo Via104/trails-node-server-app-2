@@ -4,7 +4,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
 import LikesRoutes from "./likes/routes.js";
-// import TrailRoutes from "./trails/routes.js";
+import AddTrailRoutes from "./addTrails/routes.js";
+import TrailRoutes from "./trails/routes.js";
 
 const CONNECTION_STRING =
   process.env.CONNECTION_STRING || "mongodb://127.0.0.1:27017/trails-app";
@@ -24,19 +25,21 @@ const sessionOptions = {
   saveUninitialized: true,
   cookie: { maxAge: 1000 * 60 * 60 * 24 },
 };
-if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-  };
-}
+// if (process.env.NODE_ENV !== "development") {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//   };
+// }
 
 app.use(session(sessionOptions));
 app.use(express.json());
 
 UserRoutes(app);
-// TrailRoutes(app);
+AddTrailRoutes(app)
+TrailRoutes(app);
+LikesRoutes(app)
 
 // app.use(cors());
 app.listen(4000);
