@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema(
     },
     favourites: {
       type: [Object],
-      unique: true,
       required: false,
     },
   },

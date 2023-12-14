@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
 import LikesRoutes from "./likes/routes.js";
 import AddTrailRoutes from "./addTrails/routes.js";
-import TrailRoutes from "./trails/routes.js";
+import likedTrailRoutes from "./likedTrails/routes.js";
 
 const CONNECTION_STRING =
   process.env.CONNECTION_STRING || "mongodb://127.0.0.1:27017/trails-app";
@@ -38,7 +38,7 @@ app.use(express.json());
 
 UserRoutes(app);
 AddTrailRoutes(app)
-TrailRoutes(app);
+likedTrailRoutes(app);
 LikesRoutes(app)
 
 // app.use(cors());
