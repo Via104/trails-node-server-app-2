@@ -68,7 +68,7 @@ function UserRoutes(app) {
     }
   };
 
-  const favourites = async (req, res) => {
+  const favorites = async (req, res) => {
     const user = await dao.findUserById(req.params.userId);
     res.json(user.favourites);
   };
@@ -103,7 +103,7 @@ function UserRoutes(app) {
   app.post("/api/users/signout", signout);
   app.put("/api/users/:id", updateUser);
   app.put("/api/users/favourites/:userId", updateFavourites);
-  app.get("/api/users/:userId/favourites", favourites);
+  app.get("/api/users/:userId/favorites", favorites);
   app.put("/api/users/:userId/:trailId", updateTrail);
 }
 export default UserRoutes;
