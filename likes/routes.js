@@ -27,7 +27,7 @@ function LikesRoutes(app) {
     const status = await dao.deleteUserLikesTrail(userId, trailId);
     res.json(status);
   };
-  const findUsersLikedTrail = async (req, res) => {
+  const findUsersOfLikedTrail = async (req, res) => {
     const { trailId } = req.params;
     const users = await dao.findUsersLikedTrail(trailId);
     res.json(users);
@@ -41,10 +41,11 @@ function LikesRoutes(app) {
     const trails = await dao.findLikes();
     res.json(trails);
   };
+  
 
   app.post("/api/likes/user/trail/:trailId", createUserLikesTrail);
   app.delete("/api/likes/trail/:trailId", deleteUserLikesTrail);
-  app.get("/api/likes/trails/:trailId", findUsersLikedTrail);
+  app.get("/api/likes/trails/:trailId", findUsersOfLikedTrail);
   app.get("/api/likes/user/:userId", findTrailsLikedByUser);
   app.get("/api/likes", findLikes);
 }

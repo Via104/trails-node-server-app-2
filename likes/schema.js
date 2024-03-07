@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// This is useful for the Community and Details page
 const schema = mongoose.Schema(
   {
     user: {

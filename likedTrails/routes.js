@@ -26,7 +26,7 @@ function likedTrailRoutes(app) {
     const {trailId} = req.params
     const {trail} = req.body
     let currentTrail = await dao.findTrailById(trailId);
-    const currentUser = ["currentUser"]
+    const currentUser = req.session["currentUser"]
     console.log('In addLikedUsers')
     console.log(currentUser)
     if (!currentTrail) {
@@ -51,7 +51,7 @@ function likedTrailRoutes(app) {
   const removeLikedUser = async(req, res) => {
     const {trailId} = req.params
     const currentTrail = await dao.findTrailById(trailId);
-    const currentUser = ['currentUser']
+    const currentUser = req.session['currentUser']
     console.log('In removeLikedUsers')
     console.log(currentUser._id)
     if (!currentTrail) {

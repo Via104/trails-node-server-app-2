@@ -28,6 +28,7 @@ function UserRoutes(app) {
   };
 
   const signin = async (req, res) => {
+    console.log('**Signin**')
     const { username, password } = req.body;
     // console.log(`username: ${username}, pass: ${password}`)
     const currentUser = await dao.findUserByCredentials(username, password);
@@ -54,6 +55,7 @@ function UserRoutes(app) {
   };
 
   const signout = (req, res) => {
+    console.log('**Signout**')
     console.log('destroying')
     req.session.destroy();
     res.sendStatus(200);
@@ -61,6 +63,7 @@ function UserRoutes(app) {
 
   const account = async (req, res) => {
     if (req.session['currentUser']) {
+      console.log('**Account**')
       console.log("Server user: " + req.session['currentUser'].username);
       res.json(req.session['currentUser'])
     } else {
