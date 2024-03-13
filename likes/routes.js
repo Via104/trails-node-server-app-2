@@ -1,35 +1,51 @@
 import * as dao from "./dao.js";
 
 function LikesRoutes(app) {
+
   const createUserLikesTrail = async (req, res) => {
-    const { userId, trailId} = req.params;
-    const { title, description} = req.body;
-    if (userId === undefined) {
-      const user = req.session.currentUser._id;
-      const like = await dao.createUserLikesTrail(user, trailId, title, description);
-      res.json(like);
-      return;
+    console.log('**createUserLikesTrail**')
+    const { userId } = req.params;
+    const trail = req.body;
+    console.log(trail)
+    if (userId) {
+      try{
+        const like = await dao.createUserLikesTrail(userId, trail);
+        res.json(like);
+      }
+      catch (error) {
+        console.log(error)
+        res.status(500).json({error: 'createUserLikesTrail failed'})
+      }
     }
-    const like = await dao.createUserLikesTrail(userId, trailId, title, description);
-    res.json(like);
+    else {
+      res.sendStatus(500)
+    }
   };
+
   const deleteUserLikesTrail = async (req, res) => {
+    console.log("deleteUserLikesTrail**")
     const { userId, trailId } = req.params;
-    if (userId === undefined) {
-      const user = req.session.currentUser._id;
-      console.log('deleting like')
-      console.log(user)
-      const status = await dao.deleteUserLikesTrail(user, trailId);
-      console.log(status)
-      res.json(status);
-      return;
+    if (userId) {
+      try {
+        const status = await dao.deleteUserLikesTrail(userId, trailId);
+        console.log(status)
+        res.json(status);
+      }
+      catch (error) {
+        console.log(error)
+      }
     }
-    const status = await dao.deleteUserLikesTrail(userId, trailId);
-    res.json(status);
+    else {
+      res.sendStatus(500).json({error: 'deleteUserLikesTrail failed'})
+    }
   };
+
   const findUsersOfLikedTrail = async (req, res) => {
+    console.log('**findUsersOfLikedTrail**')
     const { trailId } = req.params;
-    const users = await dao.findUsersLikedTrail(trailId);
+    console.log(typeof(trailId))
+    const users = await dao.findUsersOfLikedTrail(trailId);
+    console.log(users)
     res.json(users);
   };
   const findTrailsLikedByUser = async (req, res) => {
@@ -38,15 +54,23 @@ function LikesRoutes(app) {
     res.json(trails);
   };
   const findLikes = async (req, res) => {
+    console.log("**findLikes**")
     const trails = await dao.findLikes();
     res.json(trails);
   };
+  // const findLikesForTrail = async (req, res) => {
+  //   console.log("**findLikedTrail**")
+  //   const {trailId} = req.params
+  //   const likes = await dao.findLikesForTrail(trailId);
+  //   res.json(likes);
+  // };
   
 
-  app.post("/api/likes/user/trail/:trailId", createUserLikesTrail);
-  app.delete("/api/likes/trail/:trailId", deleteUserLikesTrail);
-  app.get("/api/likes/trails/:trailId", findUsersOfLikedTrail);
-  app.get("/api/likes/user/:userId", findTrailsLikedByUser);
+  app.post("/api/likes/users/:userId/trails", createUserLikesTrail);
+  app.delete("/api/likes/users/:userId/trails/:trailId", deleteUserLikesTrail);
+  app.get("/api/likes/trails/:trailId/users", findUsersOfLikedTrail);
+  app.get("/api/likes/users/:userId/trails", findTrailsLikedByUser);
+  // app.get("/api/likes/trails/:trailId", findLikedTrail)
   app.get("/api/likes", findLikes);
 }
 
