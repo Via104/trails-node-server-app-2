@@ -7,8 +7,11 @@ const schema = mongoose.Schema(
       ref: "users",
     },
     trailId: String,
-    title: String,
-    description: String
+    name: String,
+    city: String, 
+    region: String,
+    description: String,
+    thumbnail: String,
   },
   { collection: "likes" }
 );
