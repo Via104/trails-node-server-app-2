@@ -8,11 +8,12 @@ import AddTrailRoutes from "./addTrails/routes.js";
 import likedTrailRoutes from "./likedTrails/routes.js";
 import "dotenv/config"
 
-// const CONNECTION_STRING =
-  // process.env.CONNECTION_STRING || "mongodb://127.0.0.1:27017/trails-app";
+const CONNECTION_STRING =
+  process.env.CONNECTION_STRING || "mongodb://127.0.0.1:27017/trails-app";
 // const CONNECTION_STRING =
 //   process.env.DB_CONNECTION_STRING;
-const CONNECTION_STRING = "mongodb+srv://giuseppi:supersecretpassword@cluster0.udcgx5m.mongodb.net/trails-app?retryWrites=true&w=majority"
+
+// const CONNECTION_STRING = "mongodb+srv://giuseppi:supersecretpassword@cluster0.udcgx5m.mongodb.net/trails-app?retryWrites=true&w=majority"
 console.log(CONNECTION_STRING)
 // mongoose.connect("mongodb://127.0.0.1:27017/trails-app");
 mongoose.connect(CONNECTION_STRING);
